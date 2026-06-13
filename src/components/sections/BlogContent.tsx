@@ -4,6 +4,9 @@ import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import Container from "@/components/layout/Container";
 
+const base = import.meta.env.BASE_URL;
+const L = (path: string) => `${base}${path}`;
+
 const categoryColors: Record<string, string> = {
   Go: "bg-blue-500/10 text-blue-400 border-blue-500/20",
   PHP: "bg-purple-500/10 text-purple-400 border-purple-500/20",
@@ -91,7 +94,7 @@ export default function BlogContent({ posts, allTags }: BlogContentProps) {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((post, i) => (
                 <motion.div key={post.slug} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <a href={`/blog/${post.slug}`}>
+                  <a href={L(`/blog/${post.slug}`)}>
                     <article className="glass-card p-6 h-full group cursor-pointer hover:border-gold-500/30 transition-all duration-500">
                       <div className="flex items-center gap-2 mb-4">
                         <span className={`px-2.5 py-0.5 text-xs font-medium rounded-full border ${categoryColors[post.category] || ""}`}>{post.category}</span>

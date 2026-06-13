@@ -5,6 +5,9 @@ import ParticleBackground from "@/components/ui/ParticleBackground";
 import Button from "@/components/ui/Button";
 import Container from "@/components/layout/Container";
 
+const base = import.meta.env.BASE_URL;
+const L = (path: string) => `${base}${path}`;
+
 const floatingIcons = [
   { icon: "</>", x: "15%", y: "20%", delay: 0 },
   { icon: "{ }", x: "85%", y: "25%", delay: 1 },
@@ -61,13 +64,13 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button href="/#contact" variant="primary" className="text-base px-8 py-4">
+            <Button href={L("/#contact")} variant="primary" className="text-base px-8 py-4">
               Book Consultation
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Button>
-            <Button href="/#services" variant="outline" className="text-base px-8 py-4">View Services</Button>
+            <Button href={L("/#services")} variant="outline" className="text-base px-8 py-4">View Services</Button>
           </motion.div>
 
           <motion.div

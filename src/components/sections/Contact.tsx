@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 
-const SITE_KEY = "0x4AAAAAADU3oTNdRCwau1YX";
-const FORM_ENDPOINT = "/api/contact";
+const SITE_KEY = "0x4AAAAAADkD5Px_MUGhcDFD";
+const FORM_ENDPOINT = "https://api.web3forms.com/submit";
+const WEB3FORMS_KEY = "dc504653-fd3e-4a18-bc55-85328671cd4a";
 
 interface FormErrors {
   name?: string;
@@ -134,8 +135,10 @@ export default function Contact() {
     if (Object.keys(errs).length > 0) return;
 
     setSending(true);
-    const data = Object.fromEntries(new FormData(formRef.current!));
-    (data as any)["cf-turnstile-response"] = turnstileToken;
+    const data = Object.fromEntries(new FormData(formRef.current!)) as Record<string, string>;
+    data["access_key"] = WEB3FORMS_KEY;
+    data["cf-turnstile-response"] = turnstileToken!;
+    data["subject"] = `New Contact Form Submission from ${data.name}`;
 
     try {
       const res = await fetch(FORM_ENDPOINT, {
@@ -143,7 +146,8 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error();
+      const result = await res.json();
+      if (!result.success) throw new Error();
     } catch {
       setSending(false);
       setErrors({ message: "Something went wrong. Please try again or email us directly." });

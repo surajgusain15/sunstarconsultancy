@@ -1,38 +1,41 @@
 import Container from "@/components/layout/Container";
 
+const base = import.meta.env.BASE_URL;
+const L = (path: string) => `${base}${path}`;
+
 const footerLinks = [
   {
     title: "Services",
     links: [
-      { label: "Go Development", href: "/#services" },
-      { label: "PHP Development", href: "/#services" },
-      { label: "Software Maintenance", href: "/#services" },
-      { label: "Consulting", href: "/#services" },
-      { label: "DevOps", href: "/#services" },
+      { label: "Go Development", href: L("/#services") },
+      { label: "PHP Development", href: L("/#services") },
+      { label: "Software Maintenance", href: L("/#services") },
+      { label: "Consulting", href: L("/#services") },
+      { label: "DevOps", href: L("/#services") },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About", href: "/" },
-      { label: "Portfolio", href: "/#portfolio" },
-      { label: "Process", href: "/#process" },
-      { label: "Careers", href: "/" },
+      { label: "About", href: L("/") },
+      { label: "Portfolio", href: L("/#portfolio") },
+      { label: "Process", href: L("/#process") },
+      { label: "Careers", href: L("/") },
     ],
   },
   {
     title: "Insights",
     links: [
-      { label: "Blog", href: "/blog" },
-      { label: "Case Studies", href: "/#portfolio" },
-      { label: "Documentation", href: "/" },
+      { label: "Blog", href: L("/blog") },
+      { label: "Case Studies", href: L("/#portfolio") },
+      { label: "Documentation", href: L("/") },
     ],
   },
   {
     title: "Contact",
     links: [
       { label: "hello@sunstarconsultancy.com", href: "mailto:hello@sunstarconsultancy.com" },
-      { label: "Book a Call", href: "/#contact" },
+      { label: "Book a Call", href: L("/#contact") },
     ],
   },
 ];
@@ -74,7 +77,7 @@ export default function Footer() {
         <div className="py-16">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             <div className="col-span-2 md:col-span-1">
-              <a href="/" className="text-xl font-heading font-bold tracking-tight">
+              <a href={L("/")} className="text-xl font-heading font-bold tracking-tight">
                 <span className="text-[var(--text-primary)]">SUNSTAR</span>
                 <span className="text-gold-400">.</span>
               </a>

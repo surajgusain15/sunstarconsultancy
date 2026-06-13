@@ -4,13 +4,16 @@ import { useState, useEffect } from "react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import Button from "@/components/ui/Button";
 
+const base = import.meta.env.BASE_URL;
+const L = (path: string) => `${base}${path}`;
+
 const navLinks = [
-  { label: "Services", href: "/#services" },
-  { label: "Tech Stack", href: "/#tech-stack" },
-  { label: "Process", href: "/#process" },
-  { label: "Portfolio", href: "/#portfolio" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Services", href: L("/#services") },
+  { label: "Tech Stack", href: L("/#tech-stack") },
+  { label: "Process", href: L("/#process") },
+  { label: "Portfolio", href: L("/#portfolio") },
+  { label: "Blog", href: L("/blog") },
+  { label: "Contact", href: L("/#contact") },
 ];
 
 export default function Navbar() {
@@ -38,7 +41,7 @@ export default function Navbar() {
     >
       <div className="section-container">
         <nav className="flex items-center justify-between h-16 md:h-20">
-          <a href="/" className="flex items-center gap-2 group">
+          <a href={L("/")} className="flex items-center gap-2 group">
             <span className="text-xl md:text-2xl font-heading font-bold tracking-tight">
               <span className="text-[var(--text-primary)]">SUNSTAR</span>
               <span className="text-gold-400">.</span>
@@ -57,7 +60,7 @@ export default function Navbar() {
             ))}
             <div className="ml-2 flex items-center gap-2">
               <ThemeToggle />
-              <Button href="/#contact" variant="primary">
+              <Button href={L("/#contact")} variant="primary">
                 Book Consultation
               </Button>
             </div>
@@ -96,7 +99,7 @@ export default function Navbar() {
               </a>
             ))}
             <div className="pt-2">
-              <Button href="/#contact" variant="primary" className="w-full">
+              <Button href={L("/#contact")} variant="primary" className="w-full">
                 Book Consultation
               </Button>
             </div>
