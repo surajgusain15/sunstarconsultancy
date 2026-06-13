@@ -2,7 +2,7 @@ import { AnimatedDiv, SectionHeader } from "@/components/ui/AnimatedDiv";
 import Container from "@/components/layout/Container";
 
 const base = import.meta.env.BASE_URL;
-const L = (path: string) => `${base}${path}`;
+const L = (path: string) => `${base.replace(/\/$/, "")}${path}`;
 
 const categoryColors: Record<string, string> = {
   Go: "bg-blue-500/10 text-blue-400 border-blue-500/20",
@@ -56,7 +56,7 @@ export default function BlogSection({ posts }: BlogSectionProps) {
           ))}
         </div>
         <AnimatedDiv y={0} className="text-center mt-10">
-          <a href={`${import.meta.env.BASE_URL}/blog`} className="inline-flex items-center gap-2 text-sm text-gold-400 hover:text-gold-300 transition-colors">
+          <a href={L("/blog")} className="inline-flex items-center gap-2 text-sm text-gold-400 hover:text-gold-300 transition-colors">
             View all articles
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

@@ -5,7 +5,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import Button from "@/components/ui/Button";
 
 const base = import.meta.env.BASE_URL;
-const L = (path: string) => `${base}${path}`;
+const L = (path: string) => `${base.replace(/\/$/, "")}${path}`;
 
 const navLinks = [
   { label: "Services", href: L("/#services") },

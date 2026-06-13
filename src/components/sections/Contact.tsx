@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 
-const SITE_KEY = "0x4AAAAAADkD5Px_MUGhcDFD";
+const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
 const FORM_ENDPOINT = "https://api.web3forms.com/submit";
-const WEB3FORMS_KEY = "dc504653-fd3e-4a18-bc55-85328671cd4a";
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY || "";
 
 
 interface FormErrors {

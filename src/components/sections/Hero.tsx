@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 import Container from "@/components/layout/Container";
 
 const base = import.meta.env.BASE_URL;
-const L = (path: string) => `${base}${path}`;
+const L = (path: string) => `${base.replace(/\/$/, "")}${path}`;
 
 const floatingIcons = [
   { icon: "</>", x: "15%", y: "20%", delay: 0 },

@@ -1,7 +1,7 @@
 import Container from "@/components/layout/Container";
 
 const base = import.meta.env.BASE_URL;
-const L = (path: string) => `${base}${path}`;
+const L = (path: string) => `${base.replace(/\/$/, "")}${path}`;
 
 const footerLinks = [
   {
