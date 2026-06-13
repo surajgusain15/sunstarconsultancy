@@ -9,6 +9,7 @@ const SITE_KEY = "0x4AAAAAADkD5Px_MUGhcDFD";
 const FORM_ENDPOINT = "https://api.web3forms.com/submit";
 const WEB3FORMS_KEY = "dc504653-fd3e-4a18-bc55-85328671cd4a";
 
+
 interface FormErrors {
   name?: string;
   email?: string;
