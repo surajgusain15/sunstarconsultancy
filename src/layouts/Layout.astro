@@ -1,0 +1,63 @@
+---
+import { organizationSchema } from "@/lib/schema";
+import "@/styles/global.css";
+
+export interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  canonical?: string;
+  noIndex?: boolean;
+}
+
+const { title, description, ogTitle, ogDescription, canonical, noIndex } = Astro.props;
+const siteUrl = "https://sunstarconsultancy.com";
+const defaultTitle = "SUNSTAR CONSULTANCY | Software Development & Engineering Consulting";
+const fullTitle = title === defaultTitle ? title : `${title} | SUNSTAR CONSULTANCY`;
+---
+<!DOCTYPE html>
+<html lang="en" class="dark" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Go development, PHP development, software consulting, backend systems, microservices, cloud-native, software modernization, engineering consulting" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="SUNSTAR CONSULTANCY" />
+    <meta property="og:title" content={ogTitle ?? fullTitle} />
+    <meta property="og:description" content={ogDescription ?? description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {noIndex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow" />
+    }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('theme');
+          var isDark = theme === 'dark' || !theme;
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        } catch(e) {}
+      })();
+    </script>
+    <slot name="navbar" />
+    <slot name="hash-scroll" />
+    <slot name="scroll-to-top" />
+    <main class="min-h-screen">
+      <slot />
+    </main>
+    <slot name="footer" />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+  </body>
+</html>

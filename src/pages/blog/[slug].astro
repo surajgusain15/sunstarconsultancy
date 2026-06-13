@@ -1,0 +1,91 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/sections/Footer";
+import HashScrollHandler from "@/components/ui/HashScrollHandler";
+import ScrollToTop from "@/components/ui/ScrollToTop";
+import Container from "@/components/layout/Container";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const categoryColors: Record<string, string> = {
+  Go: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  PHP: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  DevOps: "bg-green-500/10 text-green-400 border-green-500/20",
+  Architecture: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+};
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.excerpt}
+  ogTitle={`${post.data.title} | SUNSTAR CONSULTANCY`}
+  ogDescription={post.data.excerpt}
+  canonical={`https://sunstarconsultancy.com/blog/${post.slug}`}
+>
+  <Fragment slot="navbar"><Navbar client:load /></Fragment>
+  <Fragment slot="hash-scroll"><HashScrollHandler client:load /></Fragment>
+  <Fragment slot="scroll-to-top"><ScrollToTop client:visible /></Fragment>
+
+  <section class="pt-32 pb-16 bg-navy-900 dark:bg-navy-950">
+    <Container>
+      <div class="max-w-3xl mx-auto">
+        <a href="/blog" class="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-gold-400 transition-colors mb-8">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m7 7l-7-7 7-7" />
+          </svg>
+          Back to articles
+        </a>
+        <div class="flex items-center gap-3 mb-4">
+          <span class={`px-3 py-1 text-xs font-medium rounded-full border ${categoryColors[post.data.category] || ""}`}>{post.data.category}</span>
+          <span class="text-sm text-[var(--text-muted)]">{post.data.readTime}</span>
+        </div>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 leading-tight">{post.data.title}</h1>
+        <p class="text-lg text-[var(--text-secondary)] mb-6">{post.data.excerpt}</p>
+        <div class="flex items-center justify-between pb-6 border-b border-[var(--border)]">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-400 font-heading font-bold text-sm">SE</div>
+            <div>
+              <div class="text-sm font-semibold">{post.data.author}</div>
+              <div class="text-xs text-[var(--text-muted)]">{post.data.date}</div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            {post.data.tags.map((tag) => (
+              <a key={tag} href={`/blog?tag=${tag}`}
+                class="px-2.5 py-1 text-xs font-medium rounded-full bg-[var(--bg-card)] text-[var(--text-secondary)] border border-[var(--border)] hover:border-gold-500/30 hover:text-gold-400 transition-colors">{tag}</a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <article class="section-padding pt-12">
+    <Container>
+      <div class="max-w-3xl mx-auto">
+        <Content />
+      </div>
+      <div class="max-w-3xl mx-auto mt-16 pt-8 border-t border-[var(--border)]">
+        <a href="/blog" class="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 transition-colors font-medium">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m7 7l-7-7 7-7" />
+          </svg>
+          Back to all articles
+        </a>
+      </div>
+    </Container>
+  </article>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</Layout>

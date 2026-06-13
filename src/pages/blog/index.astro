@@ -1,0 +1,39 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/sections/Footer";
+import HashScrollHandler from "@/components/ui/HashScrollHandler";
+import ScrollToTop from "@/components/ui/ScrollToTop";
+import BlogContent from "@/components/sections/BlogContent";
+import { getCollection } from "astro:content";
+
+const blogPosts = await getCollection("blog");
+const posts = blogPosts
+  .map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    excerpt: post.data.excerpt,
+    category: post.data.category,
+    tags: post.data.tags,
+    date: post.data.date,
+    readTime: post.data.readTime,
+    author: post.data.author,
+  }))
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
+---
+
+<Layout
+  title="Blog"
+  description="Thoughts on Go, PHP, architecture, and building software that lasts."
+  canonical="https://sunstarconsultancy.com/blog"
+>
+  <Fragment slot="navbar"><Navbar client:load /></Fragment>
+  <Fragment slot="hash-scroll"><HashScrollHandler client:load /></Fragment>
+  <Fragment slot="scroll-to-top"><ScrollToTop client:visible /></Fragment>
+
+  <BlogContent posts={posts} allTags={allTags} client:load />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</Layout>

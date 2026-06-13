@@ -1,0 +1,57 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/sections/Footer";
+import HashScrollHandler from "@/components/ui/HashScrollHandler";
+import ScrollToTop from "@/components/ui/ScrollToTop";
+
+import Hero from "@/components/sections/Hero";
+import TechStack from "@/components/sections/TechStack";
+import Services from "@/components/sections/Services";
+import WhyChooseUs from "@/components/sections/WhyChooseUs";
+import Process from "@/components/sections/Process";
+import Portfolio from "@/components/sections/Portfolio";
+import Testimonials from "@/components/sections/Testimonials";
+import BlogSection from "@/components/sections/BlogSection";
+import Contact from "@/components/sections/Contact";
+
+import { serviceSchema } from "@/lib/schema";
+import { getCollection } from "astro:content";
+
+const blogPosts = await getCollection("blog");
+const posts = blogPosts
+  .map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    excerpt: post.data.excerpt,
+    category: post.data.category,
+    tags: post.data.tags,
+    date: post.data.date,
+    readTime: post.data.readTime,
+    author: post.data.author,
+  }))
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+---
+
+<Layout
+  title="SUNSTAR CONSULTANCY | Software Development & Engineering Consulting"
+  description="Specialized in Go and PHP application development, backend systems, software modernization and long-term engineering support for startups and enterprises."
+>
+  <Fragment slot="navbar"><Navbar client:load /></Fragment>
+  <Fragment slot="hash-scroll"><HashScrollHandler client:load /></Fragment>
+  <Fragment slot="scroll-to-top"><ScrollToTop client:visible /></Fragment>
+
+  <Hero client:load />
+  <TechStack client:visible />
+  <Services client:visible />
+  <WhyChooseUs client:visible />
+  <Process client:visible />
+  <Portfolio client:visible />
+  <Testimonials client:visible />
+  <BlogSection posts={posts} client:visible />
+  <Contact client:load />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+</Layout>
