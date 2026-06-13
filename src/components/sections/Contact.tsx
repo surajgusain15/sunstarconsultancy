@@ -198,7 +198,7 @@ export default function Contact() {
                   </div>
                   <div className="min-w-0">
                     <div className="text-sm text-[var(--text-muted)]">Email</div>
-                    <a href="mailto:hello@sunstarconsultancy.com" className="text-sm hover:text-gold-400 transition-colors break-all">hello@sunstarconsultancy.com</a>
+                    <a href="mailto:hello@sunstarconsultancy.in" className="text-sm hover:text-gold-400 transition-colors break-all">hello@sunstarconsultancy.in</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">

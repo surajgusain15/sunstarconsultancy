@@ -1,4 +1,4 @@
-export const SITE_URL = "https://sunstarconsultancy.com";
+export const SITE_URL = "https://sunstarconsultancy.in";
 
 export const organizationSchema = {
   "@context": "https://schema.org",
@@ -12,7 +12,7 @@ export const organizationSchema = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
-    email: "hello@sunstarconsultancy.com",
+    email: "hello@sunstarconsultancy.in",
   },
   sameAs: [
     "https://github.com/sunstarconsultancy",
