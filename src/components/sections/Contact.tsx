@@ -21,6 +21,7 @@ interface FormErrors {
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [sending, setSending] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [turnstileReady, setTurnstileReady] = useState(false);
@@ -68,6 +69,9 @@ export default function Contact() {
       },
       "expired-callback": () => {
         setTurnstileToken(null);
+      },
+      "error-callback": () => {
+        setErrors((prev) => ({ ...prev, turnstile: "Security check failed. Please refresh and try again." }));
       },
     });
 
@@ -129,54 +133,54 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const hp = formRef.current?.querySelector("#hp-field") as HTMLInputElement;
-    if (hp?.value) return;
-    const errs = validate();
-    setErrors(errs);
-    if (Object.keys(errs).length > 0) return;
-
-    setSending(true);
-    const data = Object.fromEntries(new FormData(formRef.current!)) as Record<string, string>;
-    data["access_key"] = WEB3FORMS_KEY;
-    data["cf-turnstile-response"] = turnstileToken!;
-    data["subject"] = `New Contact Form Submission from ${data.name}`;
-
     try {
+      const form = formRef.current;
+      if (!form) return;
+
+      const hp = form.querySelector("#hp-field") as HTMLInputElement;
+      if (hp?.value) return;
+
+      const errs = validate();
+      setErrors(errs);
+      if (Object.keys(errs).length > 0) return;
+
+      setSending(true);
+
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      data["access_key"] = WEB3FORMS_KEY;
+      data["cf-turnstile-response"] = turnstileToken || "";
+      data["subject"] = `New Contact Form Submission from ${data.name}`;
+
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       const result = await res.json();
-      if (!result.success) throw new Error();
-    } catch {
+      if (!result.success) throw new Error(result.message || "Form submission failed");
+
       setSending(false);
-      setErrors({ message: "Something went wrong. Please try again or email us directly." });
-      return;
+      setSubmitted(true);
+      form.reset();
+      setTurnstileToken(null);
+      setFieldValues({ name: "", email: "", phone: "", message: "" });
+      setTimeout(() => resetTurnstile(), 100);
+    } catch (err) {
+      setSending(false);
+      setErrors((prev) => ({ ...prev, message: "Something went wrong. Please try again or email us directly." }));
     }
-    setSending(false);
-    setSubmitted(true);
   };
 
   const fieldClass = (hasError: boolean) =>
     `w-full px-4 py-3 rounded-xl bg-[var(--bg-card)] border text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/40 focus:border-gold-500/60 transition-all placeholder:text-[var(--text-muted)] ${hasError ? "border-red-500/60" : "border-[var(--border)]"}`;
 
-  if (submitted) {
-    return (
-      <section id="contact" className="section-padding scroll-mt-20">
-        <Container>
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-lg mx-auto glass-card p-10 text-center">
-            <div className="w-16 h-16 rounded-full bg-gold-500/20 flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-            </div>
-            <h3 className="text-2xl font-heading font-bold mb-2">Thank You!</h3>
-            <p className="text-[var(--text-secondary)] text-sm mb-6">We have received your message. Our team will get back to you within 24 hours.</p>
-            <button onClick={() => { setSubmitted(false); setTurnstileToken(null); formRef.current?.reset(); resetTurnstile(); }} className="text-sm text-gold-400 hover:text-gold-300 transition-colors">Send another message</button>
-          </motion.div>
-        </Container>
-      </section>
-    );
-  }
+  useEffect(() => {
+    if (submitted) {
+      setShowSuccess(true);
+      const t = setTimeout(() => setShowSuccess(false), 5000);
+      return () => clearTimeout(t);
+    }
+  }, [submitted]);
 
   return (
     <section id="contact" className="section-padding scroll-mt-20">
@@ -252,12 +256,21 @@ export default function Contact() {
               </div>
               <div>
                 <div ref={turnstileRef} className="flex justify-center min-h-[65px]" />
-                {errors.turnstile && <p className="text-red-400 text-xs text-center mt-2">{errors.turnstile}</p>}
+                {errors.turnstile && (
+                  <div className="text-red-400 text-sm text-center bg-red-500/10 rounded-lg px-3 py-2 mt-2">{errors.turnstile}</div>
+                )}
               </div>
+              {showSuccess && (
+                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-green-400 text-sm text-center bg-green-500/10 rounded-xl px-4 py-3 flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  Message sent successfully! We'll get back to you within 24 hours.
+                </motion.div>
+              )}
               {errors.message && errors.message.includes("try again") && (
                 <div className="text-red-400 text-sm text-center bg-red-500/10 rounded-xl px-4 py-3">{errors.message}</div>
               )}
-              <Button type="submit" variant="primary" className="w-full" disabled={sending}>
+              <button type="submit" disabled={sending}
+                className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] ${sending ? "opacity-60 cursor-not-allowed bg-gold-500/50 text-navy-900" : "bg-gold-500 text-navy-900 hover:bg-gold-400 shadow-lg shadow-gold-500/25 hover:shadow-gold-500/40 hover:-translate-y-0.5"}`}>
                 {sending ? (
                   <span className="flex items-center justify-center gap-2">
                     <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
@@ -266,7 +279,7 @@ export default function Contact() {
                 ) : (
                   <>Send Message<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg></>
                 )}
-              </Button>
+              </button>
             </form>
           </motion.div>
         </div>
