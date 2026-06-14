@@ -131,21 +131,20 @@ export default function Contact() {
     setTimeout(revalidateAndResetTurnstile, 0);
   }, [revalidateAndResetTurnstile, fieldValues, turnstileToken]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    const form = formRef.current;
+    if (!form) return;
+
+    const hp = form.querySelector("#hp-field") as HTMLInputElement;
+    if (hp?.value) return;
+
+    const errs = validate();
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    setSending(true);
+
     try {
-      const form = formRef.current;
-      if (!form) return;
-
-      const hp = form.querySelector("#hp-field") as HTMLInputElement;
-      if (hp?.value) return;
-
-      const errs = validate();
-      setErrors(errs);
-      if (Object.keys(errs).length > 0) return;
-
-      setSending(true);
-
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
       data["access_key"] = WEB3FORMS_KEY;
       data["cf-turnstile-response"] = turnstileToken || "";
@@ -159,16 +158,15 @@ export default function Contact() {
       const result = await res.json();
       if (!result.success) throw new Error(result.message || "Form submission failed");
 
-      setSending(false);
       setSubmitted(true);
       form.reset();
       setTurnstileToken(null);
       setFieldValues({ name: "", email: "", phone: "", message: "" });
       setTimeout(() => resetTurnstile(), 100);
-    } catch (err) {
-      setSending(false);
+    } catch {
       setErrors((prev) => ({ ...prev, message: "Something went wrong. Please try again or email us directly." }));
     }
+    setSending(false);
   };
 
   const fieldClass = (hasError: boolean) =>
@@ -223,7 +221,7 @@ export default function Contact() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-3">
-            <form ref={formRef} onSubmit={handleSubmit} noValidate className="glass-card p-6 md:p-8 space-y-5">
+            <form ref={formRef} noValidate className="glass-card p-6 md:p-8 space-y-5">
               <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
                 <input id="hp-field" type="text" tabIndex={-1} autoComplete="off" />
               </div>
@@ -269,7 +267,7 @@ export default function Contact() {
               {errors.message && errors.message.includes("try again") && (
                 <div className="text-red-400 text-sm text-center bg-red-500/10 rounded-xl px-4 py-3">{errors.message}</div>
               )}
-              <button type="submit" disabled={sending}
+              <button type="button" disabled={sending} onClick={handleSubmit}
                 className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] ${sending ? "opacity-60 cursor-not-allowed bg-gold-500/50 text-navy-900" : "bg-gold-500 text-navy-900 hover:bg-gold-400 shadow-lg shadow-gold-500/25 hover:shadow-gold-500/40 hover:-translate-y-0.5"}`}>
                 {sending ? (
                   <span className="flex items-center justify-center gap-2">
