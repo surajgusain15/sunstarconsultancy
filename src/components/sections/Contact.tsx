@@ -29,7 +29,6 @@ export default function Contact() {
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const hpRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -120,21 +119,14 @@ export default function Contact() {
   }, [revalidateAndResetTurnstile]);
 
   const handleSubmit = async () => {
-    console.log("handleSubmit called");
     const form = formRef.current;
-    console.log("form ref:", !!form, "hp value:", hpRef.current?.value);
-    if (!form || hpRef.current?.value) return;
+    if (!form) return;
 
     const errs = validate();
-    console.log("validation errors:", errs);
     setErrors(errs);
-    if (Object.keys(errs).length > 0) {
-      console.log("validation failed, returning");
-      return;
-    }
+    if (Object.keys(errs).length > 0) return;
 
     setSending(true);
-    console.log("sending request, turnstileToken:", !!turnstileToken);
 
     try {
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
@@ -215,9 +207,6 @@ export default function Contact() {
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-3">
             <form ref={formRef} noValidate className="glass-card p-6 md:p-8 space-y-5">
-              <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
-                <input ref={hpRef} type="text" tabIndex={-1} autoComplete="off" />
-              </div>
               <div className="grid sm:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">Name <span className="text-gold-400">*</span></label>
