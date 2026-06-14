@@ -120,14 +120,21 @@ export default function Contact() {
   }, [revalidateAndResetTurnstile]);
 
   const handleSubmit = async () => {
+    console.log("handleSubmit called");
     const form = formRef.current;
+    console.log("form ref:", !!form, "hp value:", hpRef.current?.value);
     if (!form || hpRef.current?.value) return;
 
     const errs = validate();
+    console.log("validation errors:", errs);
     setErrors(errs);
-    if (Object.keys(errs).length > 0) return;
+    if (Object.keys(errs).length > 0) {
+      console.log("validation failed, returning");
+      return;
+    }
 
     setSending(true);
+    console.log("sending request, turnstileToken:", !!turnstileToken);
 
     try {
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
