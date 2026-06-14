@@ -8,3 +8,4 @@ coverage/
 .superpowers
 docs
 .astro
+worker/.wrangler
