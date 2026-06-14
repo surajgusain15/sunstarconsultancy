@@ -12,7 +12,7 @@ export const organizationSchema = {
   contactPoint: {
     "@type": "ContactPoint",
     contactType: "sales",
-    email: "hello@sunstarconsultancy.in",
+    email: "suraj@sunstarconsultancy.in",
   },
   sameAs: [
     "https://github.com/sunstarconsultancy",

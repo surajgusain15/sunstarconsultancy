@@ -51,7 +51,7 @@ export default {
           },
           body: JSON.stringify({
             from: "SUNSTAR Contact <contact@sunstarconsultancy.in>",
-            to: ["hello@sunstarconsultancy.in"],
+            to: ["suraj@sunstarconsultancy.in"],
             subject: `New Contact Form Submission from ${name}`,
             html: `
               <h2>New Contact Form Submission</h2>

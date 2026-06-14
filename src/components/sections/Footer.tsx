@@ -34,7 +34,7 @@ const footerLinks = [
   {
     title: "Contact",
     links: [
-      { label: "hello@sunstarconsultancy.in", href: "mailto:hello@sunstarconsultancy.in" },
+      { label: "suraj@sunstarconsultancy.in", href: "mailto:suraj@sunstarconsultancy.in" },
       { label: "Book a Call", href: L("/#contact") },
     ],
   },
