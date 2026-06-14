@@ -6,7 +6,7 @@ import Container from "@/components/layout/Container";
 import Button from "@/components/ui/Button";
 
 const SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
-const FORM_ENDPOINT = "https://api.web3forms.com/submit";
+const FORM_ENDPOINT = import.meta.env.PUBLIC_CONTACT_ENDPOINT || "https://api.web3forms.com/submit";
 const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY || "";
 
 
@@ -146,9 +146,11 @@ export default function Contact() {
 
     try {
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
-      data["access_key"] = WEB3FORMS_KEY;
       data["cf-turnstile-response"] = turnstileToken || "";
       data["subject"] = `New Contact Form Submission from ${data.name}`;
+      if (FORM_ENDPOINT.includes("web3forms")) {
+        data["access_key"] = WEB3FORMS_KEY;
+      }
 
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
