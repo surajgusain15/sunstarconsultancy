@@ -42,6 +42,7 @@ export default {
       }
 
       if (env.RESEND_API_KEY) {
+        console.log("Resend API key present, sending email...");
         const emailRes = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
@@ -65,7 +66,12 @@ export default {
         });
 
         if (!emailRes.ok) {
-          console.error("Failed to send email:", await emailRes.text());
+          const errText = await emailRes.text();
+          console.error("Failed to send email:", errText);
+          return new Response(JSON.stringify({ success: false, message: "Failed to send email. Please try again." }), {
+            status: 500,
+            headers: { "Content-Type": "application/json", ...CORS_HEADERS },
+          });
         }
       }
 
