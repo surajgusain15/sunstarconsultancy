@@ -26,12 +26,9 @@ export default function Contact() {
   const [errors, setErrors] = useState<FormErrors>({});
   const [turnstileReady, setTurnstileReady] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  const [fieldValues, setFieldValues] = useState({ name: "", email: "", phone: "", message: "" });
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
-
-  const fieldsVisible = fieldValues.name.trim() && fieldValues.email.trim() && fieldValues.phone.trim() && fieldValues.message.trim();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -54,7 +51,6 @@ export default function Contact() {
       (window as any).turnstile.remove(widgetId.current);
       widgetId.current = null;
     }
-    if (!fieldsVisible) return;
 
     widgetId.current = (window as any).turnstile.render(turnstileRef.current, {
       sitekey: SITE_KEY,
@@ -82,7 +78,7 @@ export default function Contact() {
         } catch {}
       }
     };
-  }, [turnstileReady, fieldsVisible]);
+  }, [turnstileReady]);
 
   const validate = useCallback((): FormErrors => {
     const errs: FormErrors = {};
@@ -119,17 +115,8 @@ export default function Contact() {
       delete next[field as keyof FormErrors];
       return next;
     });
-    const value = (document.getElementById(field) as HTMLInputElement)?.value || "";
-    const nextValues = { ...fieldValues, [field]: value };
-    setFieldValues(nextValues);
-    if (!(nextValues.name.trim() && nextValues.email.trim() && nextValues.phone.trim() && nextValues.message.trim()) && turnstileToken) {
-      setTurnstileToken(null);
-      if (widgetId.current && typeof window !== "undefined" && (window as any).turnstile) {
-        (window as any).turnstile.reset(widgetId.current);
-      }
-    }
     setTimeout(revalidateAndResetTurnstile, 0);
-  }, [revalidateAndResetTurnstile, fieldValues, turnstileToken]);
+  }, [revalidateAndResetTurnstile]);
 
   const handleSubmit = async () => {
     const form = formRef.current;
@@ -163,7 +150,6 @@ export default function Contact() {
       setSubmitted(true);
       form.reset();
       setTurnstileToken(null);
-      setFieldValues({ name: "", email: "", phone: "", message: "" });
       setTimeout(() => resetTurnstile(), 100);
     } catch {
       setErrors((prev) => ({ ...prev, message: "Something went wrong. Please try again or email us directly." }));

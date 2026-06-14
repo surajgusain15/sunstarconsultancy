@@ -2,7 +2,7 @@ import { AnimatedDiv, SectionHeader } from "@/components/ui/AnimatedDiv";
 import Container from "@/components/layout/Container";
 
 const base = import.meta.env.BASE_URL;
-const L = (path: string) => `${base.replace(/\/$/, "")}${path}`;
+const L = (path: string) => path ? `${base.replace(/\/$/, "")}${path}` : "";
 
 const categoryColors: Record<string, string> = {
   Go: "bg-blue-500/10 text-blue-400 border-blue-500/20",
