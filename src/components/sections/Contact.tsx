@@ -29,6 +29,7 @@ export default function Contact() {
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const hpRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -120,10 +121,7 @@ export default function Contact() {
 
   const handleSubmit = async () => {
     const form = formRef.current;
-    if (!form) return;
-
-    const hp = form.querySelector("#hp-field") as HTMLInputElement;
-    if (hp?.value) return;
+    if (!form || hpRef.current?.value) return;
 
     const errs = validate();
     setErrors(errs);
@@ -211,7 +209,7 @@ export default function Contact() {
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-3">
             <form ref={formRef} noValidate className="glass-card p-6 md:p-8 space-y-5">
               <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
-                <input id="hp-field" type="text" tabIndex={-1} autoComplete="off" />
+                <input ref={hpRef} type="text" tabIndex={-1} autoComplete="off" />
               </div>
               <div className="grid sm:grid-cols-2 gap-5">
                 <div>
