@@ -1,86 +1,69 @@
 import { AnimatedDiv, SectionHeader } from "@/components/ui/AnimatedDiv";
 import Container from "@/components/layout/Container";
 
-const projects = [
+const leadershipCapabilities = [
   {
-    title: "High-Scale API Gateway",
-    category: "Go Development",
-    description: "Designed and built a real-time API gateway handling 100k+ requests per second with sub-10ms latency.",
-    metrics: [
-      { label: "Latency Reduction", value: "94%" },
-      { label: "Requests/sec", value: "100K+" },
-      { label: "Cost Savings", value: "60%" },
-    ],
-    tags: ["Go", "gRPC", "Kubernetes", "Redis"],
+    title: "Technical Design",
+    description: "System design, microservice boundary definition, and architectural planning for high-throughput backend services.",
+    badge: "Architecture"
   },
   {
-    title: "Enterprise CMS Migration",
-    category: "PHP Modernization",
-    description: "Migrated a legacy PHP CMS to a modern Laravel architecture serving 2M+ monthly active users.",
-    metrics: [
-      { label: "Page Load Speed", value: "4x" },
-      { label: "Monthly Users", value: "2M+" },
-      { label: "Dev Velocity", value: "3x" },
-    ],
-    tags: ["PHP", "Laravel", "PostgreSQL", "AWS"],
+    title: "Code Reviews",
+    description: "Reviewing implementation quality, enforcing security & performance standards, and setting engineering guidelines.",
+    badge: "Quality Control"
   },
   {
-    title: "Financial Backend Platform",
-    category: "Backend Systems",
-    description: "Built a secure, compliant transaction processing system handling $500M+ in monthly volume.",
-    metrics: [
-      { label: "Monthly Volume", value: "$500M+" },
-      { label: "Uptime", value: "99.99%" },
-      { label: "Response Time", value: "<50ms" },
-    ],
-    tags: ["Go", "PostgreSQL", "Kubernetes", "gRPC"],
+    title: "Mentoring",
+    description: "Helping junior developers and QA testers understand complex system behavior and solve non-trivial bugs.",
+    badge: "Mentorship"
   },
   {
-    title: "E-commerce Modernization",
-    category: "Full Stack",
-    description: "Modernized a monolithic e-commerce platform into a microservices architecture, improving scalability.",
-    metrics: [
-      { label: "Deploy Speed", value: "10x" },
-      { label: "Infra Cost", value: "-45%" },
-      { label: "Peak Traffic", value: "50K rpm" },
-    ],
-    tags: ["Go", "PHP", "Redis", "Docker"],
+    title: "Troubleshooting",
+    description: "Hands-on production investigation, memory profiling, live incident response, and operational support.",
+    badge: "Operations"
   },
+  {
+    title: "Cross-Team Coordination",
+    description: "Collaborating with product management, external bank integration teams, and vendors on technical decisions.",
+    badge: "Alignment"
+  },
+  {
+    title: "Technical Execution & Delivery",
+    description: "Guiding project task planning, establishing code quality standards, refactoring legacy platforms, and supporting technical compliance.",
+    badge: "Execution"
+  }
 ];
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="section-padding bg-[var(--bg-secondary)] scroll-mt-20">
+    <section id="leadership-evidence" className="section-padding bg-[var(--bg-secondary)] scroll-mt-20">
       <Container>
         <SectionHeader
-          label="Case Studies"
-          title={<>Results That <span className="gradient-text">Speak</span></>}
-          subtitle="Real projects, real outcomes. Here is what we have delivered."
+          label="Technical Leadership"
+          title={<>Beyond <span className="gradient-text">Writing Code</span></>}
+          subtitle="How I drive technical alignment, mentor engineering teams, and maintain production standards."
         />
-        <div className="space-y-8">
-          {projects.map((project, i) => (
-            <AnimatedDiv key={project.title} delay={i * 0.1} y={30} whileHover={{ y: -3 }} className="glass-card overflow-hidden group">
-              <div className="p-6 md:p-8">
-                <div className="flex flex-col lg:flex-row lg:items-start gap-6">
-                  <div className="flex-1">
-                    <span className="text-xs font-medium text-gold-400 uppercase tracking-wider">{project.category}</span>
-                    <h3 className="text-xl md:text-2xl font-heading font-bold mt-2 mb-3">{project.title}</h3>
-                    <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-4">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="px-3 py-1 text-xs font-medium rounded-full bg-gold-500/10 text-gold-400 border border-gold-500/20">{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 lg:min-w-[280px]">
-                    {project.metrics.map((m) => (
-                      <div key={m.label} className="text-center p-3 rounded-xl bg-[var(--bg-card)]">
-                        <div className="text-lg md:text-xl font-heading font-bold gradient-text">{m.value}</div>
-                        <div className="text-xs text-[var(--text-muted)] mt-1">{m.label}</div>
-                      </div>
-                    ))}
-                  </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {leadershipCapabilities.map((item, i) => (
+            <AnimatedDiv
+              key={item.title}
+              delay={i * 0.08}
+              y={20}
+              className="glass-card p-6 flex flex-col justify-between group hover:border-gold-500/30 transition-all"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-gold-400 px-2 py-0.5 rounded bg-gold-500/10">
+                    {item.badge}
+                  </span>
                 </div>
+                <h3 className="text-lg font-heading font-bold text-[var(--text-primary)] mb-2 group-hover:text-gold-400 transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                  {item.description}
+                </p>
               </div>
             </AnimatedDiv>
           ))}
@@ -89,3 +72,5 @@ export default function Portfolio() {
     </section>
   );
 }
+
+

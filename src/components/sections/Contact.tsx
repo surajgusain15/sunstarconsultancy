@@ -170,14 +170,14 @@ export default function Contact() {
       <Container>
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
           <span className="text-gold-400 font-medium text-sm tracking-widest uppercase mb-4 block">Get in Touch</span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4">Let&apos;s Build Something <span className="gradient-text">Great Together</span></h2>
-          <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">Ready to start your next project? Tell us about it and we will get back to you within 24 hours.</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4">Let&apos;s Discuss <span className="gradient-text">Engineering & Systems</span></h2>
+          <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">Open to software consulting engagements, technical advisory, system architecture reviews, and high-impact distributed systems projects.</p>
         </motion.div>
 
         <div className="max-w-4xl mx-auto grid md:grid-cols-5 gap-8">
           <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-2 space-y-6">
             <div className="glass-card p-6">
-              <h3 className="font-heading font-semibold text-lg mb-4">Contact Information</h3>
+              <h3 className="font-heading font-semibold text-lg mb-4">Direct Contact</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-400 shrink-0">
@@ -190,20 +190,24 @@ export default function Contact() {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-400 shrink-0">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
                   </div>
-                  <div>
-                    <div className="text-sm text-[var(--text-muted)]">Phone</div>
-                    <a href="tel:+919876543210" className="text-sm hover:text-gold-400 transition-colors">+91 98765 43210</a>
+                  <div className="min-w-0">
+                    <div className="text-sm text-[var(--text-muted)]">LinkedIn</div>
+                    <a href="https://www.linkedin.com/in/suraj-gusain-01037387/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-gold-400 transition-colors break-all">linkedin.com/in/suraj-gusain-01037387</a>
                   </div>
                 </div>
               </div>
             </div>
-            <Button variant="primary" className="w-full" onClick={() => window.open("https://calendly.com/suraj-gusain15/30min", "_blank")}>
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
-              Schedule a Call
+
+            <Button variant="primary" className="w-full justify-center" onClick={() => window.open("/resume.pdf", "_blank")}>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download Resume
             </Button>
           </motion.div>
+
 
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="md:col-span-3">
             <form ref={formRef} noValidate className="glass-card p-6 md:p-8 space-y-5">

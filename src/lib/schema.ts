@@ -5,27 +5,42 @@ export const organizationSchema = {
   "@type": "Organization",
   name: "SUNSTAR CONSULTANCY",
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.png`,
-  description:
-    "Specialized in Go and PHP application development, backend systems, software modernization and long-term engineering support.",
-  foundingDate: "2024",
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "sales",
-    email: "suraj@sunstarconsultancy.in",
-  },
-  sameAs: [
-    "https://github.com/sunstarconsultancy",
-    "https://linkedin.com/company/sunstarconsultancy",
-  ],
+  founder: {
+    "@type": "Person",
+    name: "Suraj Gusain"
+  }
 };
 
-export const serviceSchema = {
+export const personSchema = {
   "@context": "https://schema.org",
-  "@type": "Service",
-  serviceType: "Software Development",
-  provider: { "@type": "Organization", name: "SUNSTAR CONSULTANCY" },
-  areaServed: "Worldwide",
+  "@type": "Person",
+  name: "Suraj Gusain",
+  jobTitle: "Software Consultant",
+  worksFor: {
+    "@type": "Organization",
+    name: "SUNSTAR CONSULTANCY",
+    url: SITE_URL
+  },
+  url: SITE_URL,
   description:
-    "Go and PHP development, microservices, cloud-native applications, software modernization.",
+    "Software Consultant at SUNSTAR CONSULTANCY with 8+ years of experience building fintech, payment, distributed, and backend systems.",
+  knowsAbout: [
+    "Golang",
+    "PHP",
+    "Laravel",
+    "Node.js",
+    "Fintech Systems",
+    "Payment Systems",
+    "Distributed Systems",
+    "Microservices",
+    "AWS",
+    "MySQL",
+    "PostgreSQL",
+    "RabbitMQ"
+  ],
+  sameAs: [
+    "https://github.com/surajgusain",
+    "https://www.linkedin.com/in/suraj-gusain-01037387/"
+  ]
 };
+

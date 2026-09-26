@@ -2,71 +2,111 @@
 
 import { AnimatedDiv, SectionHeader } from "@/components/ui/AnimatedDiv";
 import Container from "@/components/layout/Container";
-import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
-const stats = [
-  { value: 99.9, suffix: "%", label: "Uptime Guaranteed", decimals: 1 },
-  { value: 50, suffix: "+", label: "Projects Delivered", decimals: 0 },
-  { value: 10, suffix: "+", label: "Senior Engineers", decimals: 0 },
-  { value: 3, suffix: "x", prefix: "Up to ", label: "Performance Gains", decimals: 0 },
-];
-
-const values = [
+const caseStudies = [
   {
-    title: "High Performance Architecture",
-    desc: "Systems engineered for speed, built for scale from day one.",
-    icon: (<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>),
+    id: "perf-opt",
+    title: "1. Service Performance & Memory Optimization",
+    highlight: "Production Memory & Resource Profiling",
+    problem: "A production backend service experienced excessive memory consumption and CPU contention under heavy traffic load.",
+    work: "Investigated inefficient execution paths, conducted heap allocation profiling, refactored problematic routines, and isolated memory leaks in shared libraries.",
+    result: "Significantly reduced memory usage and CPU overhead, restoring service stability and lowering infrastructure load.",
+    tags: ["Go", "Profiling", "Memory Optimization", "Production Engineering"],
+    metrics: "Memory Profiling"
   },
   {
-    title: "Scalable Systems",
-    desc: "Architectures that grow seamlessly with your business.",
-    icon: (<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 4.5h14.25M3 9h9.75M3 13.5h5.25m5.25-.75L17.25 9m0 0L21 12.75M17.25 9v12" /></svg>),
+    id: "payment-rel",
+    title: "2. Payment System Reliability",
+    highlight: "Fault-Tolerant Payment Architecture",
+    problem: "Payment systems must handle unreliable third-party API dependencies, network drops, timeouts, and inconsistent downstream status responses.",
+    work: "Engineered resilient payment retry mechanisms, created proof-of-concept circuit breakers, and implemented async queue workers using RabbitMQ and AWS SQS.",
+    result: "Prevented stranded transactions, ensured deterministic payment retries, and stabilized core transaction flows.",
+    tags: ["RabbitMQ", "AWS SQS", "Circuit Breakers", "Fintech", "Payment Flows"],
+    metrics: "Fault-Tolerant Queue"
   },
   {
-    title: "Secure Development",
-    desc: "Security-first mindset embedded throughout our process.",
-    icon: (<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>),
+    id: "partner-platform",
+    title: "3. Partner & Transaction Platform",
+    highlight: "Revamping Core Production Subsystems",
+    problem: "Existing partner module architecture lacked scalability for new digital product rollouts and deposit verification workflows.",
+    work: "Refactored and revamped the core partner management, product catalog management, deposit management, and transaction ledger domains.",
+    result: "Streamlined partner onboarding, verified deposit workflows, and created clean domain boundaries across transaction modules.",
+    tags: ["Go", "PHP/Laravel", "Partner Management", "Transactions", "PostgreSQL"],
+    metrics: "Core Domain Revamp"
   },
   {
-    title: "Long-Term Support",
-    desc: "We don't just build — we maintain and evolve your software.",
-    icon: (<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>),
+    id: "vendor-integration",
+    title: "4. Payment Operations & Vendor Integration",
+    highlight: "Vendor API & Testing Infrastructure",
+    problem: "Integrating multiple vendor APIs without standardized sandbox testing environments created integration bottlenecks across developer teams.",
+    work: "Built vendor API integrations, isolated testing/production environments, authored tester documentation, conducted code reviews, and proposed alternative technical solutions.",
+    result: "Accelerated vendor testing velocity, eliminated environment crosstalk, and improved cross-functional feedback loops.",
+    tags: ["API Gateways", "System Design", "Documentation", "Testing Envs"],
+    metrics: "Multi-Env Control Room"
   },
   {
-    title: "Clean Maintainable Code",
-    desc: "Code quality is not optional — it's the foundation of velocity.",
-    icon: (<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>),
+    id: "financial-integrations",
+    title: "5. Financial Integrations & Bank UATs",
+    highlight: "Bank UATs & Microservice Design",
+    problem: "Strict institutional compliance and technical standards required for integrating external banking APIs.",
+    work: "Led technical system design, executed bank UAT certifications, implemented circuit-breaker POCs, conducted code reviews, and coordinated product feedback.",
+    result: "Successfully passed institutional bank UAT audits and delivered compliant production financial integration microservices.",
+    tags: ["Bank UATs", "Circuit Breaker", "gRPC", "Microservices", "Fintech"],
+    metrics: "Bank UAT Passed"
   },
   {
-    title: "Transparent Communication",
-    desc: "No black boxes. You always know exactly where things stand.",
-    icon: (<svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>),
-  },
+    id: "mvp-leadership",
+    title: "6. From MVP to Production",
+    highlight: "MVP Execution & Technical Stability",
+    problem: "Tight timelines for launching an educational fintech MVP while maintaining legacy application stability and meeting ISO certification requirements.",
+    work: "Executed task planning, built core MVP components, troubleshot production defects, and contributed to technical ISO 22001 certification compliance.",
+    result: "On-time MVP launch, stabilized legacy application, and fulfilled technical ISO compliance guidelines.",
+    tags: ["MVP Development", "ISO 22001", "PHP/Laravel", "AWS"],
+    metrics: "MVP Launch"
+  }
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section id="why-us" className="section-padding bg-[var(--bg-secondary)] scroll-mt-20">
+    <section id="case-studies" className="section-padding bg-[var(--bg-secondary)] scroll-mt-20">
       <Container>
-        <SectionHeader label="Why SUNSTAR" title={<>Built Different. <span className="gradient-text">Built Better.</span></>} />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          {stats.map((stat) => (
-            <AnimatedDiv key={stat.label} scale={0.9} y={0} className="glass-card p-6 text-center">
-              <div className="text-3xl md:text-4xl font-heading font-bold gradient-text mb-2">
-                <AnimatedCounter value={stat.value} suffix={stat.suffix} prefix={stat.prefix || ""} decimals={stat.decimals} />
-              </div>
-              <div className="text-sm text-[var(--text-muted)]">{stat.label}</div>
-            </AnimatedDiv>
-          ))}
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {values.map((v, i) => (
-            <AnimatedDiv key={v.title} delay={i * 0.05} y={20}
-              className="glass-card p-6 flex gap-4 group hover:border-gold-500/30 transition-all duration-500">
-              <div className="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-400 shrink-0 group-hover:bg-gold-500/20 transition-colors">{v.icon}</div>
+        <SectionHeader
+          label="Case Studies"
+          title={<>Selected <span className="gradient-text">Work</span></>}
+          subtitle="Engineering challenges, system architecture decisions, and real production outcomes."
+        />
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {caseStudies.map((item, i) => (
+            <AnimatedDiv
+              key={item.id}
+              delay={i * 0.08}
+              y={20}
+              className="glass-card p-6 flex flex-col justify-between group hover:border-gold-500/30 transition-all duration-300"
+            >
               <div>
-                <h3 className="font-heading font-semibold text-base mb-1">{v.title}</h3>
-                <p className="text-sm text-[var(--text-secondary)]">{v.desc}</p>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-mono text-gold-400 font-bold px-2 py-0.5 rounded bg-gold-500/10">
+                    {item.metrics}
+                  </span>
+                </div>
+                <h3 className="text-lg font-heading font-bold text-[var(--text-primary)] mb-2 group-hover:text-gold-400 transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-xs font-medium text-gold-400/90 mb-4">{item.highlight}</p>
+                <div className="space-y-2 text-xs text-[var(--text-secondary)] mb-6 leading-relaxed">
+                  <div><strong className="text-[var(--text-primary)]">Problem:</strong> {item.problem}</div>
+                  <div><strong className="text-[var(--text-primary)]">Solution:</strong> {item.work}</div>
+                  <div><strong className="text-[var(--text-primary)]">Result:</strong> {item.result}</div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[var(--border)]">
+                {item.tags.map((t) => (
+                  <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--bg-primary)] text-[var(--text-muted)] border border-[var(--border)]">
+                    {t}
+                  </span>
+                ))}
               </div>
             </AnimatedDiv>
           ))}
@@ -75,3 +115,4 @@ export default function WhyChooseUs() {
     </section>
   );
 }
+

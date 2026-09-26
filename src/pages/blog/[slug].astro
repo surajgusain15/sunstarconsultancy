@@ -5,14 +5,18 @@ import Footer from "@/components/sections/Footer";
 import HashScrollHandler from "@/components/ui/HashScrollHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import Container from "@/components/layout/Container";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((post) => ({
+  return posts.map((post: CollectionEntry<"blog">) => ({
     params: { slug: post.slug },
     props: { post },
   }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
@@ -31,7 +35,7 @@ const categoryColors: Record<string, string> = {
 <Layout
   title={post.data.title}
   description={post.data.excerpt}
-  ogTitle={`${post.data.title} | SUNSTAR CONSULTANCY`}
+  ogTitle={`${post.data.title} | Suraj Gusain — SUNSTAR CONSULTANCY`}
   ogDescription={post.data.excerpt}
   canonical={`https://sunstarconsultancy.in/blog/${post.slug}`}
 >
@@ -63,8 +67,8 @@ const categoryColors: Record<string, string> = {
             </div>
           </div>
           <div class="flex flex-wrap gap-2">
-            {post.data.tags.map((tag) => (
-              <a key={tag} href={`${base}/blog?tag=${tag}`}
+            {post.data.tags.map((tag: string) => (
+              <a href={`${base}/blog?tag=${tag}`}
                 class="px-2.5 py-1 text-xs font-medium rounded-full bg-[var(--bg-card)] text-[var(--text-secondary)] border border-[var(--border)] hover:border-gold-500/30 hover:text-gold-400 transition-colors">{tag}</a>
             ))}
           </div>

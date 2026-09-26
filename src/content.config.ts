@@ -9,7 +9,7 @@ const blogCollection = defineCollection({
     tags: z.array(z.string()),
     date: z.string(),
     readTime: z.string(),
-    author: z.string().default("SUNSTAR Engineering Team"),
+    author: z.string().default("Suraj Gusain"),
   }),
 });
 

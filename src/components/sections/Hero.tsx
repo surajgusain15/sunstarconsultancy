@@ -41,7 +41,7 @@ export default function Hero() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/20 bg-gold-500/5 mb-8">
               <span className="w-2 h-2 rounded-full bg-gold-400 animate-pulse" />
-              <span className="text-xs md:text-sm font-medium text-gold-400 tracking-wider uppercase">Trusted by Startups & Enterprises</span>
+              <span className="text-xs md:text-sm font-semibold text-gold-400 tracking-wider uppercase">Software Consultant</span>
             </div>
           </motion.div>
 
@@ -49,15 +49,15 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-bold tracking-tight leading-[1.1] mb-6"
           >
-            <span className="text-[var(--text-primary)]">Building Reliable </span><br />
-            <span className="gradient-text">Software That Scales</span>
+            <span className="text-[var(--text-primary)]">Building backend systems </span><br />
+            <span className="gradient-text">that survive production.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto mb-10 leading-relaxed"
           >
-            Specialized in Go and PHP application development, backend systems, software modernization and long-term engineering support.
+            8+ years of experience building fintech, payment, distributed, and backend systems across Go, PHP/Laravel, Node.js, AWS, MySQL, RabbitMQ, and microservices.
           </motion.p>
 
           <motion.div
@@ -65,23 +65,39 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button href={L("/#contact")} variant="primary" className="text-base px-8 py-4">
-              Book Consultation
+              Get In Touch
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Button>
-            <Button href={L("/#services")} variant="outline" className="text-base px-8 py-4">View Services</Button>
+            <Button href={L("/#case-studies")} variant="outline" className="text-base px-8 py-4">
+              View Case Studies
+            </Button>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1 }}
-            className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.8 }}
+            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 p-6 rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)]/50 backdrop-blur-sm"
           >
-            {["99.9% Uptime", "50+ Projects", "10+ Engineers", "Global Clients"].map((stat) => (
-              <div key={stat} className="text-center">
-                <div className="text-xs text-[var(--text-muted)] uppercase tracking-wider">{stat}</div>
-              </div>
-            ))}
+            <div className="text-center p-3 border-r border-[var(--border)] last:border-0">
+              <div className="text-2xl md:text-3xl font-bold font-heading text-gold-400">8+ Years</div>
+              <div className="text-xs text-[var(--text-secondary)] mt-1 font-medium">Engineering Experience</div>
+            </div>
+
+            <div className="text-center p-3 border-r border-[var(--border)] last:border-0">
+              <div className="text-2xl md:text-3xl font-bold font-heading text-[var(--text-primary)]">Go & PHP</div>
+              <div className="text-xs text-[var(--text-secondary)] mt-1 font-medium">Core Stack</div>
+            </div>
+
+            <div className="text-center p-3 border-r border-[var(--border)] last:border-0">
+              <div className="text-2xl md:text-3xl font-bold font-heading text-[var(--text-primary)]">Fintech</div>
+              <div className="text-xs text-[var(--text-secondary)] mt-1 font-medium">Payment Systems</div>
+            </div>
+
+            <div className="text-center p-3">
+              <div className="text-2xl md:text-3xl font-bold font-heading text-[var(--text-primary)]">Backend</div>
+              <div className="text-xs text-[var(--text-secondary)] mt-1 font-medium">Distributed Systems</div>
+            </div>
           </motion.div>
         </div>
       </Container>
@@ -90,3 +106,4 @@ export default function Hero() {
     </section>
   );
 }
+

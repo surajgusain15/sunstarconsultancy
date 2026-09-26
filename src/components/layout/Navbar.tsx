@@ -8,10 +8,11 @@ const base = import.meta.env.BASE_URL;
 const L = (path: string) => path ? `${base.replace(/\/$/, "")}${path}` : "";
 
 const navLinks = [
-  { label: "Services", href: L("/#services") },
-  { label: "Tech Stack", href: L("/#tech-stack") },
-  { label: "Process", href: L("/#process") },
-  { label: "Portfolio", href: L("/#portfolio") },
+  { label: "About", href: L("/#about") },
+  { label: "Selected Work", href: L("/#case-studies") },
+  { label: "What I Work With", href: L("/#skills") },
+  { label: "Philosophy", href: L("/#philosophy") },
+  { label: "Leadership", href: L("/#leadership-evidence") },
   { label: "Blog", href: L("/blog") },
   { label: "Contact", href: L("/#contact") },
 ];
@@ -41,10 +42,13 @@ export default function Navbar() {
     >
       <div className="section-container">
         <nav className="flex items-center justify-between h-16 md:h-20">
-          <a href={L("/")} className="flex items-center gap-2 group">
-            <span className="text-xl md:text-2xl font-heading font-bold tracking-tight">
-              <span className="text-[var(--text-primary)]">SUNSTAR</span>
+          <a href={L("/")} className="flex flex-col group">
+            <span className="text-lg md:text-xl font-heading font-bold tracking-tight leading-none">
+              <span className="text-[var(--text-primary)]">SURAJ GUSAIN</span>
               <span className="text-gold-400">.</span>
+            </span>
+            <span className="text-[10px] tracking-widest text-gold-400 uppercase font-mono font-medium">
+              SUNSTAR CONSULTANCY
             </span>
           </a>
 
@@ -53,15 +57,15 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-gold-400 transition-colors rounded-lg hover:bg-gold-500/5"
+                className="px-3 py-2 text-xs lg:text-sm text-[var(--text-secondary)] hover:text-gold-400 transition-colors rounded-lg hover:bg-gold-500/5"
               >
                 {link.label}
               </a>
             ))}
             <div className="ml-2 flex items-center gap-2">
               <ThemeToggle />
-              <Button href={L("/#contact")} variant="primary">
-                Book Consultation
+              <Button href={L("/#contact")} variant="primary" className="text-xs px-4 py-2">
+                Contact
               </Button>
             </div>
           </div>
@@ -100,7 +104,7 @@ export default function Navbar() {
             ))}
             <div className="pt-2">
               <Button href={L("/#contact")} variant="primary" className="w-full">
-                Book Consultation
+                Contact
               </Button>
             </div>
           </div>
@@ -109,3 +113,4 @@ export default function Navbar() {
     </header>
   );
 }
+

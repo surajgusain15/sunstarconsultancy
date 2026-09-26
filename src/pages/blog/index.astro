@@ -5,11 +5,11 @@ import Footer from "@/components/sections/Footer";
 import HashScrollHandler from "@/components/ui/HashScrollHandler";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import BlogContent from "@/components/sections/BlogContent";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 const blogPosts = await getCollection("blog");
 const posts = blogPosts
-  .map((post) => ({
+  .map((post: CollectionEntry<"blog">) => ({
     slug: post.slug,
     title: post.data.title,
     excerpt: post.data.excerpt,
@@ -19,9 +19,9 @@ const posts = blogPosts
     readTime: post.data.readTime,
     author: post.data.author,
   }))
-  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  .sort((a: { date: string }, b: { date: string }) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort();
+const allTags: string[] = Array.from<string>(new Set(posts.flatMap((p: { tags: string[] }) => p.tags))).sort();
 ---
 
 <Layout
