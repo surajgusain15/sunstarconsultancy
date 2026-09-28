@@ -39,9 +39,10 @@ export function AnimatedDiv({
     <motion.div
       initial={initial}
       whileInView={animate}
-      viewport={{ once: true }}
-      transition={{ delay }}
+      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
+      transition={{ delay, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
       whileHover={whileHover}
+      style={{ willChange: "transform, opacity" }}
       className={className}
     >
       {children}

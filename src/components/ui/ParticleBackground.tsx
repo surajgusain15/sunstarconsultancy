@@ -39,17 +39,20 @@ export default function ParticleBackground() {
 
     const init = () => {
       resize();
-      particles = Array.from({ length: Math.min(80, Math.floor((window.innerWidth * window.innerHeight) / 15000)) }, () => ({
+      const isMobile = window.innerWidth < 768;
+      const count = isMobile ? 25 : Math.min(70, Math.floor((window.innerWidth * window.innerHeight) / 18000));
+      particles = Array.from({ length: count }, () => ({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 2 + 0.5,
-        alpha: Math.random() * 0.5 + 0.1,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        size: Math.random() * (isMobile ? 1.5 : 2) + 0.5,
+        alpha: Math.random() * 0.4 + 0.1,
       }));
     };
 
     const draw = () => {
+      const isMobile = window.innerWidth < 768;
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
       const particleColor = isDarkMode ? [212, 168, 83] as const : [10, 22, 40] as const;
       const lineColor = isDarkMode ? [212, 168, 83] as const : [10, 22, 40] as const;
@@ -60,13 +63,15 @@ export default function ParticleBackground() {
         if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
         if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
 
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const distSq = dx * dx + dy * dy;
-        if (distSq < 22500) {
-          const dist = Math.sqrt(distSq);
-          p.vx -= (dx / dist) * 0.01;
-          p.vy -= (dy / dist) * 0.01;
+        if (!isMobile) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 22500) {
+            const dist = Math.sqrt(distSq);
+            p.vx -= (dx / dist) * 0.01;
+            p.vy -= (dy / dist) * 0.01;
+          }
         }
 
         ctx.beginPath();
@@ -75,19 +80,21 @@ export default function ParticleBackground() {
         ctx.fill();
       }
 
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distSq = dx * dx + dy * dy;
-          if (distSq < 14400) {
-            const dist = Math.sqrt(distSq);
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(${lineColor[0]}, ${lineColor[1]}, ${lineColor[2]}, ${isDarkMode ? 0.08 * (1 - dist / 120) : 0.04 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+      if (!isMobile) {
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distSq = dx * dx + dy * dy;
+            if (distSq < 14400) {
+              const dist = Math.sqrt(distSq);
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.strokeStyle = `rgba(${lineColor[0]}, ${lineColor[1]}, ${lineColor[2]}, ${isDarkMode ? 0.08 * (1 - dist / 120) : 0.04 * (1 - dist / 120)})`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
           }
         }
       }
